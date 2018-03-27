@@ -11,7 +11,7 @@ angular.module("router", ["ngRoute"])
       .when("/dashboard", {
           templateUrl : ""
       })
-      .when("/applications", {
+      .when("/view-application", {
           templateUrl : ""
       })
       .when("/apply", {

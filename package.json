@@ -1,0 +1,23 @@
+{
+  "name": "resume-manager",
+  "version": "1.0.0",
+  "description": "resume app for ITSC",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "1.5.x",
+    "angular-mocks": "1.5.x",
+    "angular-route": "1.5.x",
+    "bootstrap": "3.3.x"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://git.uc.edu/niekg/resume-manager.git"
+  },
+  "keywords": [
+    "ITSC"
+  ],
+  "author": "kaidong",
+  "license": "ISC"
+}

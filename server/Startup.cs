@@ -33,6 +33,8 @@ namespace server
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseStaticFiles();
 
             app.UseMvc();
         }

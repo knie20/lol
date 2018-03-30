@@ -1,18 +1,22 @@
-angular.module("app", [
+'use strict';
+
+var app = angular.module("index", [
   "ngRoute",
   "applicationDashboard",
   "applicationInfo",
   "managerLogin",
   "applyForm",
-  "frontPage"
-])
+  "front-page"
+]);
+
+app
   .component("index", {
     templateUrl: "index.html"
   })
-  .config(function($routeProvider) {
+  .config(['$routeProvider', function($routeProvider) {
     $routeProvider
     .when("/", {
-        template: "<front-page></front-page>",
+        template: "<front-page></front-page>"
     })
     .when("/login", {
         template: ""
@@ -25,6 +29,6 @@ angular.module("app", [
     })
     .when("/apply", {
       template: ""
-    });
-  });
+    })
+  }]);
 

@@ -1,0 +1,10 @@
+/Users/itsolctr/Documents/VSCProjects/resume-manager/server/bin/Debug/netcoreapp2.0/server.deps.json
+/Users/itsolctr/Documents/VSCProjects/resume-manager/server/bin/Debug/netcoreapp2.0/server.runtimeconfig.json
+/Users/itsolctr/Documents/VSCProjects/resume-manager/server/bin/Debug/netcoreapp2.0/server.runtimeconfig.dev.json
+/Users/itsolctr/Documents/VSCProjects/resume-manager/server/bin/Debug/netcoreapp2.0/server.dll
+/Users/itsolctr/Documents/VSCProjects/resume-manager/server/bin/Debug/netcoreapp2.0/server.pdb
+/Users/itsolctr/Documents/VSCProjects/resume-manager/server/obj/Debug/netcoreapp2.0/server.csproj.CoreCompileInputs.cache
+/Users/itsolctr/Documents/VSCProjects/resume-manager/server/obj/Debug/netcoreapp2.0/server.AssemblyInfoInputs.cache
+/Users/itsolctr/Documents/VSCProjects/resume-manager/server/obj/Debug/netcoreapp2.0/server.AssemblyInfo.cs
+/Users/itsolctr/Documents/VSCProjects/resume-manager/server/obj/Debug/netcoreapp2.0/server.dll
+/Users/itsolctr/Documents/VSCProjects/resume-manager/server/obj/Debug/netcoreapp2.0/server.pdb

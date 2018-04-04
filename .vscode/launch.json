@@ -10,6 +10,7 @@
   "type": "coreclr",
   "request": "launch",
   "preLaunchTask": "build",
+  "requireExactSource": false,
   "program": "${workspaceRoot}/server/bin/Debug/netcoreapp2.0/server.dll",
   "args": [],
   "cwd": "${workspaceRoot}/server/",

@@ -16,36 +16,41 @@ namespace server.Controllers
     {
         // GET api/application
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<JObject> Get()
         {
-            List<Application> applications  = (List<Application>) ApplicationDAO.ReadAllApplications();
-            IEnumerable<string> serializedApplications = new List<string>();
-            applications.ForEach(a => {
-              serializedApplications.Append(JsonConvert.SerializeObject(a));
-            });
+            List<Application> applications  = ApplicationDAO.ReadAllApplications().ToList();
+            List<JObject> serializedApplications = new List<JObject>();
+            foreach(Application a in applications){
+              serializedApplications.Add(JObject.FromObject(a));
+            }
 
             return serializedApplications;
         }
 
         // GET api/application/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public JObject Get(int id)
         {
-            return JsonConvert.SerializeObject(ApplicationDAO.ReadApplication(id));
+            return JObject.FromObject(ApplicationDAO.ReadApplication(id));
         }
 
         // POST api/application
         [HttpPost]
-        public void Post([FromBody]string jsonApplication)
+        public void Post([FromBody]string jsonBody)
         {
-            Application application = JsonConvert.DeserializeObject<Application>(jsonApplication);
+            JObject applicationJson = JObject.Parse(jsonBody).Value<JObject>("application");
+            Application application = new Application{
+                FirstName = applicationJson.Value<string>("first_name"),
+                Lastname = applicationJson.Value<string>("last_name")
+            };
             ApplicationDAO.CreateApplication(application);
         }
 
         // PUT api/application/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public string Put(int id, [FromBody]string jsonBody)
         {
+            return "nice";
         }
 
         // DELETE api/application/5

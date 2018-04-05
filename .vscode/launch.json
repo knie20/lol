@@ -9,7 +9,7 @@
   "name": ".NET Core Launch (web)",
   "type": "coreclr",
   "request": "launch",
-  "preLaunchTask": "build",
+  "preLaunchTask": "",
   "requireExactSource": false,
   "program": "${workspaceRoot}/server/bin/Debug/netcoreapp2.0/server.dll",
   "args": [],

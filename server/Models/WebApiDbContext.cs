@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace server.Models
 {
-    public class WebApiContext : DbContext
+    public class WebApiDbContext : DbContext
     {
-        public WebApiContext(DbContextOptions<WebApiContext> options) : base(options) { }
+        public WebApiDbContext(DbContextOptions<WebApiDbContext> options) : base(options) { }
 
         public DbSet<Application> Applications { get; set; }
 

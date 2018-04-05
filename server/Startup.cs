@@ -15,8 +15,6 @@ namespace server
 {
     public class Startup
     {
-
-        public static string ConnectionString { get; private set; }
         public Startup(IConfiguration configuration)
         {
             // Set up configuration sources.
@@ -31,8 +29,8 @@ namespace server
             services.AddMvc();
             services.AddSingleton<IConfiguration>(Configuration);
             
-            services.AddEntityFrameworkNpgsql().AddDbContext<WebApiContext>(opt => 
-            opt.UseNpgsql(ConnectionString));
+            services.AddDbContext<WebApiDbContext>(opt => 
+            opt.UseNpgsql(Configuration.GetConnectionString("ResumeContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,11 +39,13 @@ namespace server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             
             app.UseStaticFiles();
 
             app.UseMvc();
+            
         }
     }
 }

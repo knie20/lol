@@ -17,7 +17,7 @@ namespace server.Persistence
         private static IDbConnection Connection{
             get{
                 System.Data.SqlClient.SqlConnectionStringBuilder builder = new System.Data.SqlClient.SqlConnectionStringBuilder();
-                builder["Username"] = "manager";
+                builder["User ID"] = "manager";
                 builder["Password"] = "manager";
                 builder["Host"] = "localhost";
                 builder["Port"] = 5432;
@@ -43,7 +43,7 @@ namespace server.Persistence
         }
 
         public static void CreateApplication(Application application){
-            using(var db = Connection{
+            using(var db = Connection){
                 string queryStr = "INSERT INTO public.Application (FirstName, LastName, Email, PositionId, ResumePath) VALUES(@FirstName, @LastName, @Email, @PositionId, @ResumePath)";
                 db.Open();
                 db.Execute(queryStr, application);
@@ -51,7 +51,7 @@ namespace server.Persistence
         }
 
         public static void DeleteApplication(int id){
-            using(var db = Connection{
+            using(var db = Connection){
                 string queryStr = "DELETE * FROM public.Application WHERE ApplicationId = @ Id";
                 db.Open();
                 db.Execute(queryStr, new { Id = id });

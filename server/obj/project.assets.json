@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.0": {
+      "BCrypt.Net-Core/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "System.Runtime.Extensions": "4.1.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/BCrypt.Net-Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/BCrypt.Net-Core.dll": {}
+        }
+      },
       "Dapper/1.50.4": {
         "type": "package",
         "dependencies": {
@@ -4692,6 +4705,20 @@
     }
   },
   "libraries": {
+    "BCrypt.Net-Core/1.4.0": {
+      "sha512": "61fIfobQh+o1vsoLTY6abM2UnyFLGAXJSqLYAwlNMfC3445kDD57AqLrJIAOFcHsgn+T3i8tbCP0ugK5btA6Uw==",
+      "type": "package",
+      "path": "bcrypt.net-core/1.4.0",
+      "files": [
+        "bcrypt.net-core.1.4.0.nupkg.sha512",
+        "bcrypt.net-core.nuspec",
+        "lib/net40/BCrypt.Net-Core.dll",
+        "lib/net45/BCrypt.Net-Core.dll",
+        "lib/net451/BCrypt.Net-Core.dll",
+        "lib/net452/BCrypt.Net-Core.dll",
+        "lib/netstandard1.3/BCrypt.Net-Core.dll"
+      ]
+    },
     "Dapper/1.50.4": {
       "sha512": "t5DMz+1aEkBcyCgkj+6hJHNsUq3k/d67lVMTNzICEhVjPUI3Gt2kgotSK8S4SpziIbFPphnOEn8M6Q75ED5hRQ==",
       "type": "package",
@@ -12359,31 +12386,34 @@
     ".NETCoreApp,Version=v2.0": [
       "Dapper >= 1.50.4",
       "Microsoft.AspNetCore.All >= 2.0.6",
+      "Microsoft.AspNetCore.Identity >= 2.0.2",
+      "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 2.0.2",
       "Microsoft.EntityFrameworkCore.Design >= 2.0.2",
       "Microsoft.EntityFrameworkCore.Tools >= 2.0.2",
       "Microsoft.NETCore.App >= 2.0.0",
       "Newtonsoft.Json >= 11.0.2",
-      "Npgsql.EntityFrameworkCore.PostgreSQL >= 2.0.0"
+      "Npgsql.EntityFrameworkCore.PostgreSQL >= 2.0.0",
+      "bcrypt.net-core >= 1.4.0"
     ]
   },
   "packageFolders": {
-    "/Users/itsolctr/.nuget/packages/": {},
-    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
+    "C:\\Users\\kdnie\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/itsolctr/Documents/VSCProjects/resume-manager/server/server.csproj",
+      "projectUniqueName": "d:\\Users\\kaidong\\VSCProjects\\resume-manager\\server\\server.csproj",
       "projectName": "server",
-      "projectPath": "/Users/itsolctr/Documents/VSCProjects/resume-manager/server/server.csproj",
-      "packagesPath": "/Users/itsolctr/.nuget/packages/",
-      "outputPath": "/Users/itsolctr/Documents/VSCProjects/resume-manager/server/obj/",
+      "projectPath": "d:\\Users\\kaidong\\VSCProjects\\resume-manager\\server\\server.csproj",
+      "packagesPath": "C:\\Users\\kdnie\\.nuget\\packages\\",
+      "outputPath": "d:\\Users\\kaidong\\VSCProjects\\resume-manager\\server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/Users/itsolctr/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\kdnie\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
@@ -12413,6 +12443,14 @@
             "target": "Package",
             "version": "[2.0.6, )"
           },
+          "Microsoft.AspNetCore.Identity": {
+            "target": "Package",
+            "version": "[2.0.2, )"
+          },
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[2.0.2, )"
+          },
           "Microsoft.EntityFrameworkCore.Design": {
             "target": "Package",
             "version": "[2.0.2, )"
@@ -12433,6 +12471,10 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": {
             "target": "Package",
             "version": "[2.0.0, )"
+          },
+          "bcrypt.net-core": {
+            "target": "Package",
+            "version": "[1.4.0, )"
           }
         },
         "imports": [

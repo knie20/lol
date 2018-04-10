@@ -7,11 +7,12 @@ using server.Models;
 using server.Persistence;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace server.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), Authorize]
     public class ApplicationController : Controller
     {
         // GET api/application

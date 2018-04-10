@@ -8,6 +8,6 @@ namespace server.Models
 
         public DbSet<Application> Applications { get; set; }
 
-        public DbSet<Position> Positions { get; set; }
+        public DbSet<LoginCredentials> Positions { get; set; }
     }
 }

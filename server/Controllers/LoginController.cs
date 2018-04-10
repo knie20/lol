@@ -7,6 +7,9 @@ using server.Models;
 using server.Persistence;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace server.Controllers
 {
@@ -14,6 +17,7 @@ namespace server.Controllers
     [Route("auth")]
     public class LoginController : Controller
     {
+        
         // POST auth/logout
         [HttpPost("logout")]
         public string Logout([FromBody]string jsonBody)

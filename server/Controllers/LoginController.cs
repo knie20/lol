@@ -14,7 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace server.Controllers
 {
 
-    [Route("auth")]
+    [Route("api/auth")]
     public class LoginController : Controller
     {
         
@@ -30,6 +30,11 @@ namespace server.Controllers
         public void Login([FromBody]LoginCredentials login)
         {
             
+        }
+
+        [HttpGet("current-user")]
+        public string GetCurrentUser(){
+            return "mememememmememe";
         }
     }
 }

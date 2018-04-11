@@ -1,1 +1,45 @@
-apply
+<!doctype html>
+<html ng-app="applyForm" ng-controller="applyFormCtrl">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  </head>
+  <body ng-app="apply-form">
+    <div class="page-header">{{ currentUser }}</div>
+    <h1>Appication Form</h1>
+    <br>
+    <div class="form-group">
+        <label for="input-fname">First Name</label>
+        <input type="text" class="form-control" id="input-fname" placeholder="John">
+    </div>
+    <div class="form-group">
+        <label for="input-lname">Last Name</label>
+        <input type="text" class="form-control" id="input-lname" placeholder="Doe">
+    </div>
+    <div class="form-group">
+        <label for="input-email">Email address</label>
+        <input type="email" class="form-control" id="input-email" placeholder="name@example.com">
+    </div>
+    <div class="form-group">
+        <label for="input-position">Position Being Applied</label>
+        <select class="form-control" id="input-position">
+          <option>1</option>
+        </select>
+      </div>
+    <div class="form-group">
+        <label for="input-resume">Resume</label>
+        <input type="file" class="form-control" id="input-resume" placeholder="name@example.com">
+    </div>
+    <br/>
+    <script>
+    angular.module('applyForm', [])
+    .controller('applyFormCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
+        $http.get('/api/apply/positions').then(function(res) {
+          $scope.positions = res.data;
+        });
+        
+      }]);
+    </script>
+  </body>
+</html>

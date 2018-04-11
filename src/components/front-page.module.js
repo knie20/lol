@@ -1,5 +1,5 @@
 angular.module('frontPage', ['ngRoute'])
   .component('front-page', {
-    templateUrl: "./front-page.template.html",
+    templateUrl: "../front-page.html",
     controller: [],
   });

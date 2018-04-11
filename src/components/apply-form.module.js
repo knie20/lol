@@ -1,5 +1,5 @@
 angular.module('applyForm', [])
   .component('applyForm', {
-    templateUrl: "./apply-form.template.html",
+    templateUrl: "../apply-form.html",
     controller: []
   });

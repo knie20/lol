@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.IO;
+using Microsoft.Extensions.FileProviders;
 
 namespace server
 {
@@ -61,7 +63,11 @@ namespace server
             }
             
             app.UseAuthentication();
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions{
+                    FileProvider = new PhysicalFileProvider(
+                        Path.Combine(Directory.GetCurrentDirectory(), "../src")),
+                        RequestPath = ""
+                });
 
             app.UseMvc();
             

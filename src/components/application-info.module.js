@@ -1,5 +1,5 @@
 angular.module('applicationInfo', [])
   .component('applicationInfo', {
-    templateUrl: "./application-info.template.html",
+    templateUrl: "../application-info.html",
     controller: []
   });

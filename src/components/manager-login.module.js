@@ -1,5 +1,5 @@
 angular.module('managerLogin', [])
   .component('managerLogin', {
-    templateUrl: "./manager-login.template.html",
+    templateUrl: "../manager-login.html",
     controller: []
   });

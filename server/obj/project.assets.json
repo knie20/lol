@@ -12403,11 +12403,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Users\\kaidong\\VSCProjects\\resume-manager\\server\\server.csproj",
+      "projectUniqueName": "D:\\Users\\kaidong\\VSCProjects\\resume-manager\\server\\server.csproj",
       "projectName": "server",
-      "projectPath": "d:\\Users\\kaidong\\VSCProjects\\resume-manager\\server\\server.csproj",
+      "projectPath": "D:\\Users\\kaidong\\VSCProjects\\resume-manager\\server\\server.csproj",
       "packagesPath": "C:\\Users\\kdnie\\.nuget\\packages\\",
-      "outputPath": "d:\\Users\\kaidong\\VSCProjects\\resume-manager\\server\\obj\\",
+      "outputPath": "D:\\Users\\kaidong\\VSCProjects\\resume-manager\\server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

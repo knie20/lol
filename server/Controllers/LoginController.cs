@@ -20,14 +20,14 @@ namespace server.Controllers
         
         // POST auth/logout
         [HttpPost("logout")]
-        public string Logout([FromBody]string jsonBody)
+        public string Logout([FromBody]string username)
         {
             return "";
         }
 
         // POST auth/login
         [HttpPost("login")]
-        public void Login([FromBody]string jsonBody)
+        public void Login([FromBody]LoginCredentials login)
         {
             
         }

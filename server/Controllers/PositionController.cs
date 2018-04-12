@@ -3,15 +3,15 @@ using server.Models;
 
 namespace server.Controllers
 {
-    [Route("api/apply")]
-    public class ApplyController: Controller
+    [Route("api/{controller}")]
+    public class PositionController: Controller
     {
         [HttpPost]
-        public string Apply([FromBody] Application application){
-            return "";
+        public void Apply([FromBody] Position position){
+            
         }
 
-        [HttpGet("positions")]
+        [HttpGet("all")]
         public IActionResult GetPositions(){
             return null;
         }

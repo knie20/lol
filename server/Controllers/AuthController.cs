@@ -14,8 +14,8 @@ using Microsoft.IdentityModel.Tokens;
 namespace server.Controllers
 {
 
-    [Route("api/auth")]
-    public class LoginController : Controller
+    [Route("api/{controller}")]
+    public class AuthController : Controller
     {
         
         // POST auth/logout

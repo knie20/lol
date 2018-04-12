@@ -61,3 +61,6 @@ typings/
 .next
 
 # dotnet
+
+# mock files
+files

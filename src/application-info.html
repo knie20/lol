@@ -1,19 +1,23 @@
 <!doctype html>
-<html ng-app="applicationInfo" ng-controller="applicationInfoCtrl">
+<html ng-app="application-info" ng-controller="applicationInfoCtrl">
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   </head>
-  <body ng-app="apply-form">
+  <body>
     <div class="page-header">{{ currentUser }}</div>
-    <h2>{{ applicant.fname }} {{ applicant.lname }}</h2>
+    <h2>{{ applicant.firstName }} {{ applicant.lastName }}</h2>
     <h3>{{ applicant.email }}</h3>
-    <script>
-    angular.module('applicationInfo', [])
-    .controller('applicationInfoCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
-        
-        
+    <script> 
+    angular.module('application-info', [])
+    .controller('applicationInfoCtrl', ['$scope', '$http', '$window', '$location', function($scope, $http, $window, $location){
+      var req = {
+            method: 'GET',
+            url: '/api/application/' + $location.search().id,
+            headers: { Authorization: 'JWT ' + localStorage.getItem('JWT-RM')},
+            data: { }
+          }
       }]);
     </script>
   </body>

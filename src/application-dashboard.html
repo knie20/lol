@@ -1,1 +1,65 @@
-dash
+<!doctype html>
+<html ng-app="application-dashboard" ng-controller="applicationDashboardCtrl">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <div class="application-list">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              First Name
+            </th>
+            <th>
+              Last Name
+            </th>
+            <th>
+              Email
+            </th>
+            <th>
+              Position
+            </th>
+            <th>
+              Link to Application
+            </th>
+          </tr>
+        </thead>
+        <tr class="td-repeat" ng-repeat="application from applications">
+          <td>
+            {{ application.firstName }}
+          </td>
+          <td>
+            {{ application.lastName }}
+          </td>
+          <td>
+            {{ application.email }}
+          </td>
+          <td>
+            {{ application. position }}
+          </td>
+          <td>
+            <a href="/application-info.html?id={{application.applicationId}}"
+          </td>
+        </tr>
+      </table>
+    </div>
+    <script> 
+    angular.module('application-dashboard', [])
+    .controller('applicationDashboardCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
+        var req = {
+            method: 'GET',
+            url: '/api/application',
+            headers: { Authorization: 'JWT ' + localStorage.getItem('JWT-RM')},
+            data: { }
+          }
+
+        $http.get(req).then( res => {
+          $scope.applications = res.data.applications;
+        });
+      }]);
+    </script>
+  </body>
+</html>

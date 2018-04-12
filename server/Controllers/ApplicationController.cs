@@ -37,21 +37,9 @@ namespace server.Controllers
 
         // POST api/application
         [HttpPost]
-        public void Post([FromBody]string jsonBody)
+        public void Post([FromBody]Application application)
         {
-            JObject applicationJson = JObject.Parse(jsonBody).Value<JObject>("application");
-            Application application = new Application{
-                FirstName = applicationJson.Value<string>("first_name"),
-                Lastname = applicationJson.Value<string>("last_name")
-            };
             ApplicationDAO.CreateApplication(application);
-        }
-
-        // PUT api/application/5
-        [HttpPut("{id}")]
-        public string Put(int id, [FromBody]string jsonBody)
-        {
-            return "nice";
         }
 
         // DELETE api/application/5

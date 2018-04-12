@@ -1,11 +1,11 @@
 <!doctype html>
-<html ng-app="applyForm" ng-controller="applyFormCtrl">
+<html ng-app="apply-form" ng-controller="applyFormCtrl">
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   </head>
-  <body ng-app="apply-form">
+  <body>
     <div class="page-header">{{ currentUser }}</div>
     <h1>Appication Form</h1>
     <br>
@@ -22,22 +22,46 @@
         <input type="email" class="form-control" id="input-email" placeholder="name@example.com">
     </div>
     <div class="form-group">
-        <label for="input-position">Position Being Applied</label>
+        <label for="input-positions">Position Being Applied</label>
         <select class="form-control" id="input-position">
-          <option>1</option>
+          <option ng-repeat="position in positions"> {{ position.positionName }} </option>
         </select>
       </div>
     <div class="form-group">
-        <label for="input-resume">Resume</label>
-        <input type="file" class="form-control" id="input-resume" placeholder="name@example.com">
+        <label for="input-file">Upload Resume</label>
+        <input type="file" class="form-control" id="input-file">
     </div>
     <br/>
+    <button class="btn-submit" ng-click="submitForm()">Apply</button>
     <script>
-    angular.module('applyForm', [])
+    angular.module('apply-form', [])
     .controller('applyFormCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
-        $http.get('/api/apply/positions').then(function(res) {
-          $scope.positions = res.data;
+        $http.get('/api/position/all').then(function(res) {
+          $scope.positions = res.data.positions;
         });
+
+        submitForm = () => {
+          var req = {
+            method: 'POST',
+            url: '/api/application',
+            headers: { },
+            data: { 
+              application: {
+                FirstName: document.getElementById('input-fname').value,
+                LastName: document.getElementById('input-lname').value,
+                Email: document.getElementById('input-email').value,
+                PositionId: positions.find(() => {
+                  return positionName = document.getElementById('input-position').value;
+                }).positionId,
+                ResumePath: "/"
+              }
+            }
+          }
+
+          $http.post(req).then(res => {
+            return ;
+          });
+        };
         
       }]);
     </script>

@@ -46,8 +46,9 @@ namespace server
                     };
                     });
 
-            services.AddMvc();
-            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddMvc().AddSessionStateTempDataProvider();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             
             services.AddDbContext<WebApiDbContext>(opt => 
             opt.UseNpgsql(Configuration.GetConnectionString("ResumeContext")));
@@ -63,6 +64,7 @@ namespace server
             }
             
             app.UseAuthentication();
+            app.UseSession();
             app.UseStaticFiles(new StaticFileOptions{
                     FileProvider = new PhysicalFileProvider(
                         Path.Combine(Directory.GetCurrentDirectory(), "../src")),

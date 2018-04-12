@@ -16,12 +16,6 @@ namespace server.Persistence
     {
         private static IDbConnection Connection{
             get{
-                System.Data.SqlClient.SqlConnectionStringBuilder builder = new System.Data.SqlClient.SqlConnectionStringBuilder();
-                // builder["User ID"] = "manager";
-                // builder["Password"] = "manager";
-                // builder["Host"] = "localhost:5432";
-                // builder["Database"] = "ResumeManager";
-                // return new NpgsqlConnection(builder.ConnectionString);
                 return new NpgsqlConnection("Username=manager;Password=manager;Server=127.0.0.1;Port=5432;Database=ResumeManager;Integrated Security=true;Pooling=true;");
             }
         }
@@ -57,7 +51,7 @@ namespace server.Persistence
 
         public static void DeleteApplication(int id){
             using(var db = Connection){
-                string queryStr = "DELETE * FROM application WHERE ApplicationId = @ Id";
+                string queryStr = "DELETE * FROM application WHERE ApplicationId = @Id";
                 db.Open();
                 db.Execute(queryStr, new { Id = id });
             }

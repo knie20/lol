@@ -6,7 +6,7 @@ namespace server.Utils
     {
         private static string salt = "k5#";
 
-        private static string HashPassword(string pw){
+        public static string HashPassword(string pw){
             return BCrypt.Net.BCrypt.HashPassword(pw, salt);
         }
 

@@ -17,7 +17,7 @@ namespace server.Controllers
     {
         // GET api/application
         [HttpGet]
-        public IEnumerable<JObject> Get()
+        public IEnumerable<JObject> GetAllAdfpplications()
         {
             List<Application> applications  = ApplicationDAO.ReadAllApplications().ToList();
             List<JObject> serializedApplications = new List<JObject>();

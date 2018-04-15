@@ -14,7 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace server.Controllers
 {
 
-    [Route("api/{controller}")]
+    [Route("api/[controller]")]
     public class AuthController : Controller
     {
         

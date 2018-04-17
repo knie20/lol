@@ -11,15 +11,15 @@
     <br>
     <div class="form-group">
         <label for="input-fname">First Name</label>
-        <input type="text" class="form-control" id="input-fname" placeholder="John">
+        <input type="text" class="form-control" id="input-fname" placeholder="John" value="{{generateRandomString(15)}}">
     </div>
     <div class="form-group">
         <label for="input-lname">Last Name</label>
-        <input type="text" class="form-control" id="input-lname" placeholder="Doe">
+        <input type="text" class="form-control" id="input-lname" placeholder="Doe" value="{{generateRandomString(20)}}">
     </div>
     <div class="form-group">
         <label for="input-email">Email address</label>
-        <input type="email" class="form-control" id="input-email" placeholder="name@example.com">
+        <input type="email" class="form-control" id="input-email" placeholder="name@example.com" value="{{generateRandomString(100)}}">
     </div>
     <div class="form-group">
         <label for="input-positions">Position Being Applied</label>
@@ -32,7 +32,7 @@
         <input type="file" class="form-control" id="input-file">
     </div>
     <br/>
-    <button class="btn-submit" ng-click="this.submitForm()">Apply</button>
+    <button class="btn-submit" ng-click="submitForm()">Apply</button>
     <script>
     angular.module('apply-form', [])
     .controller('applyFormCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
@@ -41,28 +41,66 @@
           console.log($scope.positions);
         });
 
+        $scope.generateRandomString = length => {
+          var text = "";
+          var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        submitForm = function(){
+          for (let i = 0; i < length; i++){
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+          }
+
+          return text;
+        }
+
+        // $scope.uploadFile = files => {
+        //   var req = {
+        //     method: 'POST',
+        //     url: '/api/application/file',
+        //     withCredentials: true,
+        //     headers: { 'Content-Type': undefined },
+        //     transformRequest: angular.identity,
+        //     data: {
+        //       file: files[0]
+        //     }
+        //   }
+
+        //   $http(req).then(res => {
+        //     // $window.location.href = '/index.html';
+        //   });
+        // }
+
+        $scope.uploadFile = function(files) {
+            var fd = new FormData();
+            //Take the first selected file
+            fd.append("file", files[0]);
+
+            $http.post('api/application/file', fd, {
+                withCredentials: true,
+                headers: {'Content-Type': undefined },
+                transformRequest: angular.identity
+            });
+
+        };
+
+        $scope.submitForm = () => {
           var req = {
             method: 'POST',
             url: '/api/application',
             headers: { },
             data: { 
               application: {
+                ApplicationId: -1,
                 FirstName: document.getElementById('input-fname').value,
                 LastName: document.getElementById('input-lname').value,
                 Email: document.getElementById('input-email').value,
-                PositionId: $scope.positions.find(() => {
-                  return positionName = document.getElementById('input-position').value;
-                }).positionId,
+                PositionName: document.getElementById('input-position').value,
                 ResumePath: "/"
               }
             }
           }
 
-          console.log("work plz");
           $http(req).then(res => {
-            $window.location.href = '/index.html';
+            $scope.uploadFile(document.getElementById('input-file').files);
           });
         };
         

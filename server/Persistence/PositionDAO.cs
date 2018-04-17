@@ -20,17 +20,19 @@ namespace server.Persistence
         }
 
         public static IEnumerable<Position> ReadAllPositions(){
-            IEnumerable<Position> positions = null;
-            try{
                 using(var db = Connection){
                     string queryStr = "SELECT * FROM position";
                     db.Open();
-                    positions = db.Query<Position>(queryStr);
+                    return db.Query<Position>(queryStr);
                 }
-            }catch(NpgsqlException e){
-                Console.Write(e.StackTrace);
+        }
+
+        public static Position ReadPosition(string positionName){
+            using(var db = Connection){
+                    string queryStr = "SELECT * FROM position WHERE \"PositionName\" = @PositionName";
+                    db.Open();
+                    return db.Query<Position>(queryStr, new { PositionName = positionName }).FirstOrDefault();
             }
-            return positions;
         }
 
         public static void AddPosition(Position position){

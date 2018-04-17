@@ -1,0 +1,30 @@
+Frontend:
+  Apply Form:
+    ✔ HTTPGET positions from server @done(18-04-17 14:01)
+    ✔ HTTPPOST form data to postgres @done(18-04-17 14:06)
+    ☐ File Upload
+    ☐ File Download
+  Manager Login:
+    ☐ Register form
+    ☐ Login Form
+  DashBoard:
+    ☐ Use card components for viewing
+    ☐ Filters for applications
+  View Application:
+    ☐ View Resume in embedded div
+Backend:
+  Models:
+    ✔ Make Models compatible with table @done(18-04-17 14:22)
+  Services:
+    ☐ Authorization of Users
+    ☐ Handle File Upload
+    ✔ Password Hashing and Salting @done(18-04-17 14:21)
+  Persistence:
+    ✔ Application Creation @done(18-04-17 14:10)
+    ✔ Reading Applications @done(18-04-17 14:10)
+    ✔ Deleting Applications @done(18-04-17 14:10)
+    ☐ CRUD for Position Table
+    ☐ CRUD for auth table
+    
+  
+    

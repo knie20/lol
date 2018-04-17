@@ -19,11 +19,22 @@ namespace server.Persistence
                 return new NpgsqlConnection("Username=manager;Password=manager;Server=127.0.0.1;Port=5432;Database=ResumeManager;Integrated Security=true;Pooling=true;");
             }
         }
+
+        // reads application with the given ID
         public static Application ReadApplication(int id){
             using(var db = Connection){
                 string queryStr = "SELECT * FROM application WHERE ApplicationId = @Id";
                 db.Open();
                 return db.Query<Application>(queryStr, new { Id = id }).FirstOrDefault();
+            }
+        }
+
+        //reads the most recent application AKA the one with the largest ID
+        public static Application ReadApplication(){
+            using(var db = Connection){
+                string queryStr = "SELECT * FROM application ORDER BY \"ApplicationId\" DESC LIMIT 1;";
+                db.Open();
+                return db.Query<Application>(queryStr).FirstOrDefault();
             }
         }
 
@@ -43,7 +54,9 @@ namespace server.Persistence
 
         public static void CreateApplication(Application application){
             using(var db = Connection){
-                string queryStr = "INSERT INTO application (FirstName, LastName, Email, PositionId, ResumePath) VALUES(@FirstName, @LastName, @Email, @PositionId, @ResumePath)";
+                string queryStr = "INSERT INTO application "
+                + "(\"ApplicationId\", \"FirstName\", \"LastName\", \"Email\", \"PositionId\", \"ResumePath\") "
+                + "VALUES(@ApplicationId, @FirstName, @LastName, @Email, @PositionId, @ResumePath)";
                 db.Open();
                 db.Execute(queryStr, application);
             }

@@ -12,12 +12,12 @@ using Microsoft.AspNetCore.Authorization;
 namespace server.Controllers
 {
 
-    [Route("api/[controller]"), Authorize]
+    [Route("api/[controller]")]
     public class ApplicationController : Controller
     {
         // GET api/application
         [HttpGet]
-        public IEnumerable<JObject> GetAllAdfpplications()
+        public IEnumerable<JObject> GetAllApplications()
         {
             List<Application> applications  = ApplicationDAO.ReadAllApplications().ToList();
             List<JObject> serializedApplications = new List<JObject>();

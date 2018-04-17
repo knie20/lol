@@ -32,15 +32,17 @@
         <input type="file" class="form-control" id="input-file">
     </div>
     <br/>
-    <button class="btn-submit" ng-click="submitForm()">Apply</button>
+    <button class="btn-submit" ng-click="this.submitForm()">Apply</button>
     <script>
     angular.module('apply-form', [])
     .controller('applyFormCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
-        $http.get('/api/position/all').then(function(res) {
-          $scope.positions = res.data.positions;
+        $http.get('/api/position').then(function(res) {
+          $scope.positions = res.data;
+          console.log($scope.positions);
         });
 
-        submitForm = () => {
+
+        submitForm = function(){
           var req = {
             method: 'POST',
             url: '/api/application',
@@ -50,7 +52,7 @@
                 FirstName: document.getElementById('input-fname').value,
                 LastName: document.getElementById('input-lname').value,
                 Email: document.getElementById('input-email').value,
-                PositionId: positions.find(() => {
+                PositionId: $scope.positions.find(() => {
                   return positionName = document.getElementById('input-position').value;
                 }).positionId,
                 ResumePath: "/"
@@ -58,8 +60,9 @@
             }
           }
 
-          $http.post(req).then(res => {
-            return ;
+          console.log("work plz");
+          $http(req).then(res => {
+            $window.location.href = '/index.html';
           });
         };
         

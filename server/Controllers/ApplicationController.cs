@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using server.Models;
 using server.Persistence;
+using server.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Authorization;
@@ -37,6 +38,22 @@ namespace server.Controllers
             return JObject.FromObject(ApplicationDAO.ReadApplication(id));
         }
 
+        //GET api/application/file/4
+        [HttpGet("file/{id}")]
+        public async Task<IActionResult> GetFile(int id)
+        {
+            var path = ApplicationDAO.ReadApplication(id).ResumePath;
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, FileUtil.GetContentType(path), path);
+        }
+
         // POST api/application
         [HttpPost]
         public void Post([FromBody]JObject body)
@@ -49,12 +66,13 @@ namespace server.Controllers
                 Lastname = applicationJson.Value<string>("LastName"),
                 Email = applicationJson.Value<string>("Email"),
                 PositionId = PositionDAO.ReadPosition(applicationJson.Value<string>("PositionName")).PositionId,
-                ResumePath = applicationJson.Value<string>("ResumePath")
+                ResumePath = Path.Combine(Directory.GetCurrentDirectory(), "../files", applicationJson.Value<string>("ResumePath"))
             };
 
             ApplicationDAO.CreateApplication(application);
         }
 
+        // POST api/application/file
         [HttpPost("file")]
         public void PostFile([FromForm] IFormFile file) 
         {

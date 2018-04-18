@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace server
 {
@@ -30,24 +31,26 @@ namespace server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //         .AddJwtBearer(options =>
-            //         {
-            //         options.TokenValidationParameters = new TokenValidationParameters
-            //         {
-            //             ValidateIssuer = true,
-            //             ValidateAudience = true,
-            //             ValidateLifetime = true,
-            //             ValidateIssuerSigningKey = true,
-            //             ValidIssuer = Configuration["Jwt:Issuer"],
-            //             ValidAudience = Configuration["Jwt:Issuer"],
-            //             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-            //         };
-            //         });
-
-            // services.AddMvc().AddSessionStateTempDataProvider();
-            // services.AddDistributedMemoryCache();
-            // services.AddSession();
+            // => remove default claims
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(cfg => {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = Configuration["Jwt:JwtIssuer"],
+                    ValidAudience = Configuration["Jwt:JwtIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:JwtKey"])),
+                    RequireExpirationTime = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero // remove delay of token when expire
+                };
+            });
 
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(
@@ -65,12 +68,16 @@ namespace server
                 app.UseDatabaseErrorPage();
             }
             
-            // app.UseAuthentication();
-            // app.UseSession();
+            app.UseAuthentication();
             app.UseStaticFiles(new StaticFileOptions{
                     FileProvider = new PhysicalFileProvider(
                         Path.Combine(Directory.GetCurrentDirectory(), "../src")),
                         RequestPath = ""
+                });
+            app.UseStaticFiles(new StaticFileOptions{
+                    FileProvider = new PhysicalFileProvider(
+                        Path.Combine(Directory.GetCurrentDirectory(), "../files")),
+                        RequestPath = "/files"
                 });
 
             app.UseMvc();

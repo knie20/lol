@@ -3,7 +3,7 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <div class="page-header">{{ currentUser }}</div>
@@ -38,7 +38,6 @@
     .controller('applyFormCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
         $http.get('/api/position').then(function(res) {
           $scope.positions = res.data;
-          console.log($scope.positions);
         });
 
         $scope.generateRandomString = length => {
@@ -51,23 +50,6 @@
 
           return text;
         }
-
-        // $scope.uploadFile = files => {
-        //   var req = {
-        //     method: 'POST',
-        //     url: '/api/application/file',
-        //     withCredentials: true,
-        //     headers: { 'Content-Type': undefined },
-        //     transformRequest: angular.identity,
-        //     data: {
-        //       file: files[0]
-        //     }
-        //   }
-
-        //   $http(req).then(res => {
-        //     // $window.location.href = '/index.html';
-        //   });
-        // }
 
         $scope.uploadFile = function(files) {
             var fd = new FormData();
@@ -94,7 +76,7 @@
                 LastName: document.getElementById('input-lname').value,
                 Email: document.getElementById('input-email').value,
                 PositionName: document.getElementById('input-position').value,
-                ResumePath: "/"
+                ResumePath: document.getElementById('input-file').files[0].name
               }
             }
           }

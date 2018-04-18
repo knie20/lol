@@ -3,51 +3,87 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
+    <div id="form-login">
       <h1>Manager Login</h1>
       <br>
       <div class="form-group">
-          <label for="input-text">Username or Email</label>
-          <input type="text" class="form-control" id="input-name">
+          <label for="input-text">Username</label>
+          <input type="text" class="form-control" id="input-login-name">
       </div>
       <div class="form-group">
           <label for="input-secret">Password</label>
-          <input type="password" class="form-control" id="input-pass">
+          <input type="password" class="form-control" id="input-login-pass">
       </div>
-      <button class="btn-submit" ng-click="submitForm()">Submit</button>
-      <code id="error-user-msg" style="display: none">This user does not exist</code>
+      <button class="btn-submit" ng-click="login()">Login</button>
       <code id="error-pass-msg" style="display: none">The password is incorrect</code>
+    </div>
+    <div id="form-register">
+        <h1>Manager Login</h1>
+        <br>
+        <div class="form-group">
+            <label for="input-text">Username</label>
+            <input type="text" class="form-control" id="input-reg-name">
+            <label for="input-text">Email</label>
+            <input type="text" class="form-control" id="input-reg-email">
+        </div>
+        <div class="form-group">
+            <label for="input-secret">Password</label>
+            <input type="password" class="form-control" id="input-reg-pass">
+        </div>
+        <button class="btn-submit" ng-click="register()">Register</button>
+        <code id="reg-msg" style="display: none">User registered; Try logging in</code>
+    </div>
     <script> 
     angular.module('manager-login', [])
     .controller('managerLoginCtrl', ['$scope', '$http', '$window', '$timeout', function($scope, $http, $window, $timeout){
-        $scope.submitForm = function(){
+        $scope.login = () => {
           var req = {
             method: 'POST',
             url: '/api/auth/login',
             headers: { },
             data: { 
-              usernameOrEmail: document.getElementById('input-name'),
-              password: document.getElementById('input-pass')
+              Username: document.getElementById('input-login-name'),
+              Pw: document.getElementById('input-login-pass')
             }
-          }
+          };
 
-          $http.post(req).then( res => {
-            if (res.data.status === 'Approved'){
-              localStorage.setItem('JWT-RM', res.data.JWT);
+          $http(req).then( res => {
+            if (res.data.status === 'SUCCESS'){
+              localStorage.setItem('JWT', res.data.JWT);
               $window.location.href = '/application-dashboard.html'
-            } else if (res.data.status === 'No User'){
-              document.getElementById('error-user-msg').style.display = 'inline';
-              $timeout(() => { document.getElementById('error-user-msg').style.display = 'none'; }, 3000);              
-            } else if (res.data.status === 'Wrong Pass'){
+            } else if (res.data.status === 'FAILURE'){
               document.getElementById('error-pass-msg').style.display = 'inline';
               $timeout(() => { document.getElementById('error-pass-msg').style.display = 'none'; }, 3000);
             } else {
               $window.location.href = '/unknow-error.html';
             }
           });
-        } 
+        }
+        
+        $scope.register = () => {
+          var req = {
+            method: 'POST',
+            url: '/api/auth/register',
+            headers: { },
+            data: { 
+              Username: document.getElementById('input-reg-name'),
+              Email: document.getElementById('input-reg-email'),
+              Pw: document.getElementById('input-reg-pass')
+            }
+          };
+
+          $http(req).then(res => {
+            if (res.data.status === 'SUCCESS'){
+              document.getElementById('reg-msg').style.display = 'inline';
+              $timeout(() => { document.getElementById('reg-msg').style.display = 'none'; }, 3000);
+            } else if (res.data.status === 'FAILURE'){
+              alert(res.data.message);
+            }
+          });
+        }
         
       }]);
     </script>

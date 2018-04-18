@@ -28,15 +28,15 @@ namespace server.Persistence
             }
         }
 
-        public static bool VerifyCredentials(LoginCredentials login, string pw){
+        public static LoginCredentials ReadAccount(string username){
           using(var db = Connection){
-                string queryStr = "SELECT HashedPw from auth WHERE Username = @Username OR Email = @Email";
+                string queryStr = "SELECT * from auth WHERE Username = @Username";
                 db.Open();
-                return PasswordUtil.VerifyPassword(pw, db.Query<string>(queryStr, login).FirstOrDefault());
+                return db.Query<LoginCredentials>(queryStr).FirstOrDefault();
             }
         }
 
-        public static void RemovePosition(string username){
+        public static void RemoveAccount(string username){
             using(var db = Connection){
                 string queryStr = "DELETE * FROM auth WHERE Username = @Username";
                 db.Open();

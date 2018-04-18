@@ -3,9 +3,24 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
+    <div id="filter-wrapper">
+      <form id="form-filter" onsubmit="filter()">
+        Search By
+        <label for="input-search-name">Name: </label>
+        <input type="text" id="input-search-name" placeholder="ex. John Doe">
+        <label for="input-search-email">Email: </label>
+        <input type="text" id="input-search-email" placeholder="ex. example@example.ex">
+        <label for="input-positions">Position: </label>
+        <select class="form-control" id="input-position">
+          <option> Any </option>
+          <option ng-repeat="position in positions"> {{ position.positionName }} </option>
+        </select>
+        <input type="submit">
+      </form>
+    </div>
     <div class="application-list">
       <table>
         <thead>
@@ -38,7 +53,7 @@
             {{ application.email }}
           </td>
           <td>
-            {{ application. position }}
+            {{ application.position }}
           </td>
           <td>
             <a href="/application-info.html?id={{application.applicationId}}"
@@ -49,6 +64,10 @@
     <script> 
     angular.module('application-dashboard', [])
     .controller('applicationDashboardCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
+      $http.get('/api/position').then(function(res) {
+          $scope.positions = res.data;
+        });
+      
         var req = {
             method: 'GET',
             url: '/api/application',
@@ -59,6 +78,17 @@
         $http.get(req).then( res => {
           $scope.applications = res.data.applications;
         });
+
+        $scope.filter = (nameStr, emailStr, position) => {
+          $scope.applications = $scope.applications.filter( a => {
+            return (a.FirstName.includes(nameStr) == true ||
+              a.LastName.includes(nameStr) == true ) &&
+              a.Email.includes(emailStr) == true &&
+              a.PositionId == $scope.positions.find( p => {
+                return p.PositionName == position;
+              }).PositionId;
+          });
+        }
       }]);
     </script>
   </body>

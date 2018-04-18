@@ -23,7 +23,7 @@ namespace server.Persistence
         // reads application with the given ID
         public static Application ReadApplication(int id){
             using(var db = Connection){
-                string queryStr = "SELECT * FROM application WHERE ApplicationId = @Id";
+                string queryStr = "SELECT * FROM application WHERE \"ApplicationId\" = @Id";
                 db.Open();
                 return db.Query<Application>(queryStr, new { Id = id }).FirstOrDefault();
             }

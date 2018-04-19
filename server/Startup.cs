@@ -20,13 +20,13 @@ namespace server
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+        
         public Startup(IConfiguration configuration)
         {
             // Set up configuration sources.
         Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -52,9 +52,9 @@ namespace server
                 };
             });
 
-            services.AddSingleton<IFileProvider>(
-                new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+            // services.AddSingleton<IFileProvider>(
+            //     new PhysicalFileProvider(
+            //         Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
             services.AddMvc();
         }

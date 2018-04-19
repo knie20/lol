@@ -22,7 +22,7 @@ namespace server.Persistence
 
         public static void AddAccount(LoginCredentials login){
             using(var db = Connection){
-                string queryStr = "INSERT INTO auth (Username, Email, HashedPw) VALUES(@Username, @Email, @HashedPw)";
+                string queryStr = "INSERT INTO auth (\"Username\", \"Email\", \"HashedPw\") VALUES(@Username, @Email, @HashedPw)";
                 db.Open();
                 db.Execute(queryStr, login);
             }
@@ -30,15 +30,15 @@ namespace server.Persistence
 
         public static LoginCredentials ReadAccount(string username){
           using(var db = Connection){
-                string queryStr = "SELECT * from auth WHERE Username = @Username";
+                string queryStr = "SELECT * from auth WHERE \"Username\" = @Username";
                 db.Open();
-                return db.Query<LoginCredentials>(queryStr).FirstOrDefault();
+                return db.Query<LoginCredentials>(queryStr, new { Username = username}).FirstOrDefault();
             }
         }
 
         public static void RemoveAccount(string username){
             using(var db = Connection){
-                string queryStr = "DELETE * FROM auth WHERE Username = @Username";
+                string queryStr = "DELETE * FROM auth WHERE \"Username\" = @Username";
                 db.Open();
                 db.Execute(queryStr, new { Username = username });
             }

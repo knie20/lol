@@ -14,9 +14,9 @@
         <label for="input-search-email">Email: </label>
         <input type="text" id="input-search-email" placeholder="ex. example@example.ex">
         <label for="input-positions">Position: </label>
-        <select class="form-control" id="input-position">
-          <option> Any </option>
+        <select class="form-control" id="input-position" >
           <option ng-repeat="position in positions"> {{ position.positionName }} </option>
+          <option selected>Any</option>
         </select>
         <input type="submit">
       </form>
@@ -42,21 +42,23 @@
             </th>
           </tr>
         </thead>
-        <tr class="td-repeat" ng-repeat="application from applications">
+        <tr class="td-repeat" ng-repeat="application in applications">
           <td>
-            {{ application.firstName }}
+            <p>{{ application.FirstName }}</p>
           </td>
           <td>
-            {{ application.lastName }}
+            <p>{{ application.LastName }}</p>
           </td>
           <td>
-            {{ application.email }}
+            <p>{{ application.Email }}</p>
           </td>
           <td>
-            {{ application.position }}
+            <p>
+              {{ getPositionName(application.PositionId) }}
+            </p>
           </td>
           <td>
-            <a href="/application-info.html?id={{application.applicationId}}"
+            <a href="/application-info.html?id={{application.ApplicationId}}"
           </td>
         </tr>
       </table>
@@ -64,19 +66,22 @@
     <script> 
     angular.module('application-dashboard', [])
     .controller('applicationDashboardCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
-      $http.get('/api/position').then(function(res) {
+        
+        $http.get('/api/position').then( res => {
           $scope.positions = res.data;
         });
       
         var req = {
             method: 'GET',
             url: '/api/application',
-            headers: { Authorization: 'JWT ' + localStorage.getItem('JWT-RM')},
+            headers: { Authorization: 'Bearer ' + localStorage.getItem('JWT') },
             data: { }
-          }
+          };
 
-        $http.get(req).then( res => {
-          $scope.applications = res.data.applications;
+        $http(req).then( res => {
+          $scope.applications = res.data;
+          console.log($scope.applications);
+          console.log($scope.positions);
         });
 
         $scope.filter = (nameStr, emailStr, position) => {
@@ -88,6 +93,20 @@
                 return p.PositionName == position;
               }).PositionId;
           });
+        }
+
+        $scope.parseJwt = (token) => {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace('-', '+').replace('_', '/');
+            return JSON.parse(window.atob(base64));
+        };
+
+        $scope.currentUser = $scope.parseJwt(localStorage.getItem('JWT'));
+
+        $scope.getPositionName = id => {
+         return $scope.positions.find(function(position){
+                  return position.positionId == id;
+                }).positionName
         }
       }]);
     </script>

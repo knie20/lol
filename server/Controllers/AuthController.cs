@@ -53,8 +53,23 @@ namespace server.Controllers
             return Json(res);
         }
 
+        [HttpPost("register")]
+        public IActionResult Register([FromBody]JObject creds){
+            AuthDAO.AddAccount(new LoginCredentials{
+                Username = creds.Value<string>("Username"),
+                Email = creds.Value<string>("Email"),
+                HashedPw = PasswordUtil.HashPassword(creds.Value<string>("Pw"))
+            });
+
+            JObject res = new JObject();
+            res["status"] = "SUCCESS";
+            res["message"] = "successfully logged in";
+
+            return Json(res);
+        }
+
         [HttpGet("current-user")]
-        public string GetCurrentUser(){
+        public string GetCurrentUser([FromHeader]string Authorize){
             return "";
         }
 
@@ -62,12 +77,12 @@ namespace server.Controllers
             var claims = new List<Claim>{
                 new Claim("Username", username.ToString())
             };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:JwtKey"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(Convert.ToDouble(_config["Jwt:JwtExpireDays"]));
+            var expires = DateTime.Now.AddDays(Convert.ToDouble(_config["Jwt:ExpireDays"]));
             var token = new JwtSecurityToken(
-                _config["Jwt:JwtIssuer"],
-                _config["Jwt:JwtIssuer"],
+                _config["Jwt:Issuer"],
+                _config["Jwt:Issuer"],
                 claims,
                 expires: expires,
                 signingCredentials: creds

@@ -5,11 +5,12 @@ Frontend:
     ✔ File Upload @done(18-04-18 09:59)
     ✔ File Download @done(18-04-18 14:27)
   Manager Login:
-    ☐ Register form
-    ☐ Login Form
+    ✔ Register form @done(18-04-19 12:45)
+    ✔ Login Form @done(18-04-19 12:45)
   DashBoard:
     ✘ Use card components for viewing @cancelled(18-04-18 14:28)
     ✔ Filters for applications @done(18-04-18 14:28)
+    ✔ show all applications @done(18-04-19 12:46)
   View Application:
     ✔ View Resume in embedded div @done(18-04-18 14:28)
 Backend:
@@ -24,7 +25,7 @@ Backend:
     ✔ Reading Applications @done(18-04-17 14:10)
     ✔ Deleting Applications @done(18-04-17 14:10)
     ✔ CRUD for Position Table @done(18-04-18 14:28)
-    ☐ CRUD for auth table
+    ✔ CRUD for auth table @done(18-04-19 12:46)
     
   
     

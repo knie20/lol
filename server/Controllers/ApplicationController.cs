@@ -19,16 +19,16 @@ namespace server.Controllers
     public class ApplicationController : Controller
     {
         // GET api/application
-        [HttpGet]
-        public IEnumerable<JObject> GetAllApplications()
+        [HttpGet, Authorize]
+        public IActionResult GetAllApplications()
         {
             List<Application> applications  = ApplicationDAO.ReadAllApplications().ToList();
-            List<JObject> serializedApplications = new List<JObject>();
+            JArray serializedApplications = new JArray();
             foreach(Application a in applications){
               serializedApplications.Add(JObject.FromObject(a));
             }
 
-            return serializedApplications;
+            return Json(serializedApplications);
         }
 
         // GET api/application/5
@@ -80,10 +80,6 @@ namespace server.Controllers
             string path = Path.Combine(
                         Directory.GetCurrentDirectory(), "../files", 
                         file.FileName);
-
-            if(!Directory.Exists(path)){
-                Directory.CreateDirectory(path);
-            }
 
             using (var stream = new FileStream(path, FileMode.Create))
             {

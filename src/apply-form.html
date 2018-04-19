@@ -51,7 +51,7 @@
           return text;
         }
 
-        $scope.uploadFile = function(files) {
+        $scope.uploadFile = files => {
             var fd = new FormData();
             //Take the first selected file
             fd.append("file", files[0]);
@@ -83,6 +83,7 @@
 
           $http(req).then(res => {
             $scope.uploadFile(document.getElementById('input-file').files);
+            $window.location.href = "/index.html";
           });
         };
         

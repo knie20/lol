@@ -66,5 +66,5 @@ typings/
 files
 
 #dotnet config files
-server/bin
-server/obj
+server/bin/
+server/obj/

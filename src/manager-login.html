@@ -21,7 +21,7 @@
       <code id="error-pass-msg" style="display: none">The password is incorrect</code>
     </div>
     <div id="form-register">
-        <h1>Manager Login</h1>
+        <h1>Register as Manager</h1>
         <br>
         <div class="form-group">
             <label for="input-text">Username</label>
@@ -45,14 +45,14 @@
             url: '/api/auth/login',
             headers: { },
             data: { 
-              Username: document.getElementById('input-login-name'),
-              Pw: document.getElementById('input-login-pass')
+              Username: document.getElementById('input-login-name').value,
+              Pw: document.getElementById('input-login-pass').value
             }
           };
 
           $http(req).then( res => {
             if (res.data.status === 'SUCCESS'){
-              localStorage.setItem('JWT', res.data.JWT);
+              localStorage.setItem('JWT', res.data.token);
               $window.location.href = '/application-dashboard.html'
             } else if (res.data.status === 'FAILURE'){
               document.getElementById('error-pass-msg').style.display = 'inline';
@@ -69,11 +69,11 @@
             url: '/api/auth/register',
             headers: { },
             data: { 
-              Username: document.getElementById('input-reg-name'),
-              Email: document.getElementById('input-reg-email'),
-              Pw: document.getElementById('input-reg-pass')
+              Username: document.getElementById('input-reg-name').value,
+              Email: document.getElementById('input-reg-email').value,
+              Pw: document.getElementById('input-reg-pass').value
             }
-          };
+          }
 
           $http(req).then(res => {
             if (res.data.status === 'SUCCESS'){

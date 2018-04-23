@@ -14,9 +14,15 @@ namespace server.Persistence
 {
     public class AuthDAO
     {
+
+        private static IConfiguration _config;
+
+        public AuthDAO(IConfiguration configuration){
+            _config = configuration;
+        }
         private static IDbConnection Connection{
             get{
-                return new NpgsqlConnection("Username=manager;Password=manager;Server=127.0.0.1;Port=5432;Database=ResumeManager;Integrated Security=true;Pooling=true;");
+                return new NpgsqlConnection(_config["ConnectionStrings:Postgresql"]);
             }
         }
 

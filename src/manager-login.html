@@ -6,21 +6,25 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <div id="form-login">
-      <h1>Manager Login</h1>
-      <br>
-      <div class="form-group">
-          <label for="input-text">Username</label>
-          <input type="text" class="form-control" id="input-login-name">
+    <div class="form-wrapper">
+      <div id="form-login">
+        <h1>Manager Login</h1>
+        <br>
+        <div class="form-group">
+            <label for="input-text">Username</label>
+            <input type="text" class="form-control" id="input-login-name">
+        </div>
+        <div class="form-group">
+            <label for="input-secret">Password</label>
+            <input type="password" class="form-control" id="input-login-pass">
+        </div>
+        <div class="form-group">
+          <button class="btn-submit" ng-click="login()">Login</button>
+          <code id="error-pass-msg" style="display: none">The password is incorrect</code>
+        </div>
       </div>
-      <div class="form-group">
-          <label for="input-secret">Password</label>
-          <input type="password" class="form-control" id="input-login-pass">
-      </div>
-      <button class="btn-submit" ng-click="login()">Login</button>
-      <code id="error-pass-msg" style="display: none">The password is incorrect</code>
-    </div>
-    <div id="form-register">
+      <hr>
+      <div id="form-register">
         <h1>Register as Manager</h1>
         <br>
         <div class="form-group">
@@ -33,8 +37,11 @@
             <label for="input-secret">Password</label>
             <input type="password" class="form-control" id="input-reg-pass">
         </div>
-        <button class="btn-submit" ng-click="register()">Register</button>
-        <code id="reg-msg" style="display: none">User registered; Try logging in</code>
+        <div class="form-group">
+          <button class="btn-submit" ng-click="register()">Register</button>
+          <code id="reg-msg" style="display: none">User registered; Try logging in</code>
+        </div>
+      </div>
     </div>
     <script> 
     angular.module('manager-login', [])

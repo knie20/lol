@@ -18,6 +18,20 @@ div.form-group .btn-submit {
     margin-top: 10px;
 }
 
+#pdf-wrapper {
+    width: 70%;
+    height: 900px;
+    margin: 0 auto;
+}
+
+#applicant-name {
+    text-align: center;
+}
+
+#applicant-email {
+    text-align: center;
+}
+
 h1 {
     margin: 10px;
 }

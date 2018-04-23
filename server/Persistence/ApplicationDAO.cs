@@ -15,15 +15,9 @@ namespace server.Persistence
     public class ApplicationDAO
     {
 
-        private static IConfiguration _config;
-
-        public ApplicationDAO(IConfiguration configuration){
-            _config = configuration;
-        }
-
         private static IDbConnection Connection{
             get{
-                return new NpgsqlConnection(_config["ConnectionStrings:Postgresql"]);
+                return new NpgsqlConnection("Username=manager;Password=manager;Server=127.0.0.1;Port=5432;Database=ResumeManager;Integrated Security=true;Pooling=true;");
             }
         }
 

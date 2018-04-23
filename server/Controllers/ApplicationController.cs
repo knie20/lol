@@ -32,7 +32,7 @@ namespace server.Controllers
         }
 
         // GET api/application/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize]
         public JObject Get(int id)
         {
             return JObject.FromObject(ApplicationDAO.ReadApplication(id));
@@ -42,7 +42,7 @@ namespace server.Controllers
         [HttpGet("file/{id}")]
         public async Task<IActionResult> GetFile(int id)
         {
-            var path = ApplicationDAO.ReadApplication(id).ResumePath;
+            var path = Path.Combine(Directory.GetCurrentDirectory(), ApplicationDAO.ReadApplication(id).ResumePath);
 
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))
@@ -61,12 +61,12 @@ namespace server.Controllers
             JObject applicationJson = body.Value<JObject>("application");
 
             Application application = new Application{
-                ApplicationId = ApplicationDAO.ReadApplication().ApplicationId + 1,
+                ApplicationId = (ApplicationDAO.ReadApplication() == null) ? 0 : ApplicationDAO.ReadApplication().ApplicationId + 1,
                 FirstName = applicationJson.Value<string>("FirstName"),
-                Lastname = applicationJson.Value<string>("LastName"),
+                LastName = applicationJson.Value<string>("LastName"),
                 Email = applicationJson.Value<string>("Email"),
                 PositionId = PositionDAO.ReadPosition(applicationJson.Value<string>("PositionName")).PositionId,
-                ResumePath = Path.Combine(Directory.GetCurrentDirectory(), "../files", applicationJson.Value<string>("ResumePath"))
+                ResumePath = Path.Combine("/files", applicationJson.Value<string>("ResumePath"))
             };
 
             ApplicationDAO.CreateApplication(application);

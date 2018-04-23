@@ -1,17 +1,22 @@
 <!doctype html>
 <html ng-app="application-info" ng-controller="applicationInfoCtrl">
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <div class="page-header">{{ currentUser }}</div>
-    <h1>{{ applicant.FirstName}}</h1> <h1>{{ applicant.LastName }}</h1>
-    <h3>{{ applicant.Email }}</h3>
+    <nav class="navbar">
+      <a class="nav-link" href="/index.html">Home</a>
+      <a class="nav-link" href="#" ng-click="logout()">Logout</a>
+      <code id="current-user"> signed in as '{{ currentUser }}' </code>
+    </nav>
+    <div id="applicant-name"><h1 >{{ applicant.FirstName}} {{ applicant.LastName }}</h1></div>
+    <div id="applicant-email"><h3>{{ applicant.Email }}</h3></div>
+    
     <div id="pdf-wrapper">
-        <object data="{{ applicant.ResumePath }}" type="application/pdf" width="100%" height="100%">
-          <iframe src="{{ applicant.ResumePath }}" width="100%" height="100%" style="border: none;">
+        <object id="pdf-object" type="document/pdf" width="100%" height="100%">
+          <iframe id="pdf-frame" width="100%" height="100%" style="border: none;">
           This browser does not support PDFs. Please download the PDF to view it: <a href="{{ applicant.ResumePath }}">Download PDF</a>
           </iframe>
           </object>
@@ -24,12 +29,28 @@
       var applicantReq = {
           method: 'GET',
           url: '/api/application/' + applicantId,
-          headers: { Authorization: 'JWT ' + localStorage.getItem('JWT')},
+          headers: { Authorization: 'Bearer ' + localStorage.getItem('JWT')},
           data: { }
         }
+
+      $scope.parseJwt = (token) => {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace('-', '+').replace('_', '/');
+            return JSON.parse(window.atob(base64));
+        };
+
+      $scope.logout = () => {
+        localStorage.clear();
+        $window.location.href = "/index.html"
+      }
+
+      $scope.currentUser = $scope.parseJwt(localStorage.getItem('JWT')).Username;
       
       $http(applicantReq).then(res => {
         $scope.applicant = res.data;
+        console.log($scope.applicant);
+        document.getElementById("pdf-object").setAttribute('data', $scope.applicant.ResumePath);
+        document.getElementById("pdf-frame").setAttribute('src', $scope.applicant.ResumePath);
       });
     }]);
     </script>

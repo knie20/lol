@@ -6,49 +6,47 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
+    <nav class="navbar">
+        <a class="nav-link" href="/index.html">Home</a>
+        <a class="nav-link" href="#" ng-click="logout()">Logout</a>
+        <code id="current-user"> signed in as '{{ currentUser }}' </code>
+    </nav>
     <div id="filter-wrapper">
-      <form id="form-filter" onsubmit="filter()">
+      <form id="form-filter">
         Search By
-        <label for="input-search-name">Name: </label>
-        <input type="text" id="input-search-name" placeholder="ex. John Doe">
-        <label for="input-search-email">Email: </label>
-        <input type="text" id="input-search-email" placeholder="ex. example@example.ex">
+        <br>
+        <label for="input-search-name">Name or Email: </label>
+        <input type="text" id="input-search-name">
         <label for="input-positions">Position: </label>
         <select class="form-control" id="input-position" >
           <option ng-repeat="position in positions"> {{ position.positionName }} </option>
           <option selected>Any</option>
         </select>
-        <input type="submit">
+        <input type="submit" ng-click="filterApplications()">
       </form>
     </div>
     <div class="application-list">
-      <table>
+      <table class="table">
         <thead>
           <tr>
-            <th>
-              First Name
+            <th scope="col">
+              Full Name
             </th>
-            <th>
-              Last Name
-            </th>
-            <th>
+            <th scope="col">
               Email
             </th>
-            <th>
+            <th scope="col">
               Position
-            </th>
-            <th>
-              Link to Application
             </th>
           </tr>
         </thead>
-        <tr class="td-repeat" ng-repeat="application in applications">
-          <td>
-            <p>{{ application.FirstName }}</p>
-          </td>
-          <td>
-            <p>{{ application.LastName }}</p>
-          </td>
+        <tr class="td-repeat" ng-repeat="application in filteredApplications">
+          <th scope="row">
+            <a href="/application-info.html?id={{application.ApplicationId}}">
+              <p>{{ application.FirstName }}</p>
+              <p>{{ application.LastName }}</p>
+            </a>
+          </th>
           <td>
             <p>{{ application.Email }}</p>
           </td>
@@ -56,9 +54,6 @@
             <p>
               {{ getPositionName(application.PositionId) }}
             </p>
-          </td>
-          <td>
-            <a href="/application-info.html?id={{application.ApplicationId}}"
           </td>
         </tr>
       </table>
@@ -80,19 +75,26 @@
 
         $http(req).then( res => {
           $scope.applications = res.data;
+          $scope.filteredApplications = $scope.applications;
           console.log($scope.applications);
-          console.log($scope.positions);
         });
 
-        $scope.filter = (nameStr, emailStr, position) => {
-          $scope.applications = $scope.applications.filter( a => {
-            return (a.FirstName.includes(nameStr) == true ||
-              a.LastName.includes(nameStr) == true ) &&
-              a.Email.includes(emailStr) == true &&
-              a.PositionId == $scope.positions.find( p => {
-                return p.PositionName == position;
-              }).PositionId;
+        $scope.filterApplications = () => {
+          var searchStr = document.getElementById('input-search-name').value;
+            var position = document.getElementById('input-position').value;
+          $scope.filteredApplications = $scope.applications.filter( a => {
+            return  a.LastName.toLowerCase().includes(searchStr.toLowerCase()) == true  ||
+                    a.Email.toLowerCase().includes(searchStr.toLowerCase()) == true
           });
+
+          if(position != 'Any'){
+            $scope.filteredApplications = $scope.filteredApplications.filter( a => {
+              console.log($scope.positions)
+              return a.PositionId == $scope.positions.find( p => {
+                return p.positionName == position;
+              }).positionId;
+            })
+          } 
         }
 
         $scope.parseJwt = (token) => {
@@ -101,7 +103,12 @@
             return JSON.parse(window.atob(base64));
         };
 
-        $scope.currentUser = $scope.parseJwt(localStorage.getItem('JWT'));
+        $scope.currentUser = $scope.parseJwt(localStorage.getItem('JWT')).Username;
+
+        $scope.logout = () => {
+        localStorage.clear();
+        $window.location.href = "/index.html"
+        }
 
         $scope.getPositionName = id => {
          return $scope.positions.find(function(position){

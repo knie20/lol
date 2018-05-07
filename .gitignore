@@ -68,3 +68,8 @@ files
 #dotnet config files
 server/bin/
 server/obj/
+
+#client files
+client/node_modules
+client/.tmp
+client/bower_components

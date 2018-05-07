@@ -6,6 +6,7 @@ using server.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -57,6 +58,8 @@ namespace server
             //     new PhysicalFileProvider(
             //         Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
+            services.AddCors();
+
             services.AddMvc();
         }
 
@@ -80,6 +83,15 @@ namespace server
                         Path.Combine(Directory.GetCurrentDirectory(), "../files")),
                         RequestPath = "/files"
                 });
+
+            // Shows UseCors with CorsPolicyBuilder.
+            app.UseCors(builder =>
+            builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+            );
 
             app.UseMvc();
             

@@ -17,7 +17,7 @@ Backend:
   Models:
     ✔ Make Models compatible with table @done(18-04-17 14:22)
   Services:
-    ☐ Authorization of Users
+    ✔ Authorization of Users @done(18-04-23 13:51)
     ✔ Handle File Upload @done(18-04-18 14:28)
     ✔ Password Hashing and Salting @done(18-04-17 14:21)
   Persistence:
@@ -26,6 +26,5 @@ Backend:
     ✔ Deleting Applications @done(18-04-17 14:10)
     ✔ CRUD for Position Table @done(18-04-18 14:28)
     ✔ CRUD for auth table @done(18-04-19 12:46)
-    
   
     

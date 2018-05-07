@@ -25,6 +25,7 @@
         "dependencies": {
           "Dapper": "1.50.4",
           "Microsoft.AspNetCore.All": "2.0.6",
+          "Microsoft.AspNetCore.Cors": "2.0.2",
           "Microsoft.AspNetCore.Identity": "2.0.2",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.0.2",
           "Microsoft.EntityFrameworkCore.Design": "2.0.2",
